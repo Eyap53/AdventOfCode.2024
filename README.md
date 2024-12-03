@@ -1,8 +1,14 @@
-# AdventOfCode.Template
+# AdventOfCode2022
 
-![CI](https://github.com/eduherminio/AdventOfCode.Template/workflows/CI/badge.svg)
+My attempt at the [Advent of Code 2024](https://adventofcode.com/2024).
+
+## Credits
+
+Puzzles, Code, & Design of AdventOfCodes : [Eric Wastl](https://twitter.com/ericwastl)
 
 Advent of Code template based on [AoCHelper](https://github.com/eduherminio/AoCHelper) project.
+
+### AdventOfCode.Template
 
 It allows you to focus on solving AoC puzzles while providing you with some performance stats.
 
@@ -52,6 +58,7 @@ Providing a **custom `Action<SolverConfiguration>`** to any of those methods ([a
 - `Solver.SolveLast(opt => opt.ClearConsole = false);` → solves only the last day providing a custom configuration.
 
 -
+
     ```csharp
     Solver.SolveAll(opt =>
     {
@@ -60,6 +67,7 @@ Providing a **custom `Action<SolverConfiguration>`** to any of those methods ([a
         opt.ElapsedTimeFormatSpecifier = "F3";
     });
     ```
+
     solves all the days providing a custom configuration.
 
 ## Advanced usage
