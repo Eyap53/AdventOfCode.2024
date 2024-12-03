@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace AdventOfCode;
 
 public class Day02 : BaseDay
 {
-    private string[] _input;
+    private int[][] _input;
 
     public Day02()
     {
@@ -26,11 +27,39 @@ public class Day02 : BaseDay
         return new(counter.ToString());
     }
 
-    public override ValueTask<string> Solve_2() => throw new NotImplementedException();
+    public override ValueTask<string> Solve_2()
+    {
+        int counter = 0;
+
+        for (int i = 0; i < _input.Length; i++)
+        {
+            if (IsSafe(_input[i]))
+            {
+                counter++;
+            }
+            else
+            {
+                // bruteforce test by removing
+                for (int j = 0; j < _input[i].Length; j++)
+                {
+                    int[] newLine = _input[i].Where((_, index) => index != j).ToArray();
+                    if (IsSafe(newLine))
+                    {
+                        counter++;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return new(counter.ToString());
+    }
 
     private void ParseInput()
     {
-        _input = File.ReadAllLines(InputFilePath);
+        string[] lines = File.ReadAllLines(InputFilePath);
+
+        _input = lines.Select(line => line.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray()).ToArray();
     }
 
     /// <summary>
@@ -40,14 +69,12 @@ public class Day02 : BaseDay
     /// </summary>
     /// <param name="line"></param>
     /// <returns></returns>
-    private bool IsSafe(string line)
+    private bool IsSafe(int[] line)
     {
-        int[] lineParts = line.Split(" ").Select(Int32.Parse).ToArray();
-
-        bool isIncreasing = lineParts[0] < lineParts[1];
-        for (int i = 0; i < lineParts.Length - 1; i++)
+        bool isIncreasing = line[0] < line[1];
+        for (int i = 0; i < line.Length - 1; i++)
         {
-            int difference = lineParts[i + 1] - lineParts[i];
+            int difference = line[i + 1] - line[i];
             if (isIncreasing && difference < 0 || !isIncreasing && difference > 0)
             {
                 return false;
